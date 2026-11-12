@@ -1,0 +1,8 @@
+{
+  "name": "Nike Redesign - Studio Éditorial",
+  "description": "Redesign éditorial étudiant de la boutique en ligne Nike avec identité magazine de sport, typographie Big Shoulders Display et signature dossard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

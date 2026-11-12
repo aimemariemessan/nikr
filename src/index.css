@@ -1,0 +1,242 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F5F5F0;
+  --color-surface: #E5E5DE;
+  --color-ink: #101010;
+  --color-muted: #55564F;
+  --color-alert: #FF3B1F;
+  --color-signal: #0033A0;
+
+  --font-display: "Big Shoulders Display", Impact, sans-serif;
+  --font-sans: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  /* Palette « Béton & Alerte » (version éclaircie pour lisibilité et fraîcheur) */
+  --bg: #F5F5F0;
+  --surface: #E5E5DE;
+  --ink: #101010;
+  --muted: #55564F;
+  --alert: #FF3B1F;
+  --signal: #0033A0;
+
+  /* Header & Hero configurations */
+  --header-solid-bg: #F5F5F0;
+  --cta-bg: #FF3B1F;
+  --hero-pos: center center;
+
+  /* Typographie */
+  --font-display: 'Big Shoulders Display', Impact, sans-serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Base resets & discipline des angles droits stricts (INTERDIT: rounded-2xl, pilules, etc.) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+button, input, select, textarea, .card, .badge, .dossard, img {
+  border-radius: 0 !important;
+}
+
+/* Anneau de focus visible et contrasté (2px signal décalé) */
+*:focus-visible {
+  outline: 2px solid var(--signal) !important;
+  outline-offset: 2px !important;
+}
+
+/* Header transition ciblée (uniquement background-color, color, border-color) */
+.site-header {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+  will-change: background-color, color, border-color;
+}
+
+/* État 1 : Sur le hero au repos */
+.site-header:not(.is-solid) {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.site-header:not(.is-solid) *:focus-visible {
+  outline: 2px solid #ffffff !important;
+}
+
+/* État 2 : Solide (après défilement ou sur pages catalogue/détail) */
+.site-header.is-solid {
+  background-color: var(--header-solid-bg);
+  color: var(--ink);
+  border-bottom: 1px solid var(--surface);
+}
+
+/* Variante data-header-style="blur" */
+[data-header-style="blur"] .site-header.is-solid {
+  background-color: rgba(245, 245, 240, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Animation cadencée du titre hero (3 lignes se révèlent une par une) */
+.hero-title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-title-line > span {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  animation: revealHeroLine 750ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-title-line:nth-child(1) > span {
+  animation-delay: 150ms;
+}
+
+.hero-title-line:nth-child(2) > span {
+  animation-delay: 300ms;
+}
+
+.hero-title-line:nth-child(3) > span {
+  animation-delay: 450ms;
+}
+
+@keyframes revealHeroLine {
+  from {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Signature athlétique du Dossard */
+.dossard-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+.dossard-watermark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(10rem, 28vw, 24rem);
+  line-height: 0.75;
+  color: var(--surface);
+  opacity: 0.45;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Tiroir panier (Cart Drawer) */
+.cart-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease, visibility 250ms ease;
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cart-drawer {
+  transform: translateX(100%);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-overlay.open .cart-drawer {
+  transform: translateX(0);
+}
+
+/* Apparition progressive des cartes produits au défilement */
+.product-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 550ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 550ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms ease;
+  will-change: opacity, transform;
+}
+
+.product-reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-reveal.is-revealed.reveal-delay-0 {
+  transition-delay: 0ms, 0ms, 0ms;
+}
+
+.product-reveal.is-revealed.reveal-delay-1 {
+  transition-delay: 70ms, 70ms, 0ms;
+}
+
+.product-reveal.is-revealed.reveal-delay-2 {
+  transition-delay: 140ms, 140ms, 0ms;
+}
+
+/* Grille asymétrique : 1 carte sur 5 étendue sur 2 colonnes */
+@media (min-width: 1024px) {
+  .grid-asymmetric > .product-card-asym:nth-child(5n + 1) {
+    grid-column: span 2;
+  }
+  .grid-asymmetric > .product-card-asym:nth-child(5n + 1) .card-img-container {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Respect strict de prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-line > span {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .site-header,
+  .cart-drawer,
+  .cart-overlay,
+  .product-card img,
+  .product-reveal {
+    transition: none !important;
+    transition-delay: 0ms !important;
+    transform: none !important;
+  }
+  .product-reveal {
+    opacity: 1 !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utilitaire no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

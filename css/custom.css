@@ -1,0 +1,295 @@
+/* ==========================================================================
+   NIKE REDESIGN - STUDIO ÉDITORIAL
+   Feuille de style personnalisée & variables CSS
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  /* Palette « Béton & Alerte » — Version lumineuse, épurée et contrastée */
+  --bg: #EAEAE6;
+  --surface: #D0D0C9;
+  --surface-light: #F5F5F0;
+  --card-bg: #FFFFFF;
+  --ink: #101010;
+  --muted: #55564F;
+  --alert: #FF3B1F;
+  --signal: #0033A0;
+
+  /* Header & Hero configurations */
+  --header-solid-bg: #EAEAE6;
+  --cta-bg: #FF3B1F;
+  --hero-pos: center center;
+
+  /* Typographie */
+  --font-display: 'Big Shoulders Display', Impact, sans-serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Base resets & discipline angles droits */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* Angles droits stricts : AUCUN arrondi style pilule ou bubble */
+button, input, select, textarea, .card, .badge, .dossard, img {
+  border-radius: 0 !important;
+}
+
+/* Focus accessible */
+*:focus-visible {
+  outline: 2px solid var(--signal) !important;
+  outline-offset: 2px !important;
+}
+
+/* ==========================================================================
+   HEADER : États et transitions ciblées
+   ========================================================================== */
+.site-header {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease;
+  will-change: background-color, color, border-color;
+}
+
+/* État 1 : Sur le hero au repos */
+body:not([data-header="solid"]) .site-header:not(.is-solid) {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+body:not([data-header="solid"]) .site-header:not(.is-solid) *:focus-visible {
+  outline: 2px solid #ffffff !important;
+}
+
+/* État 2 : Solide (après scroll ou sur pages catalogue/détail) */
+.site-header.is-solid,
+body[data-header="solid"] .site-header {
+  background-color: var(--header-solid-bg);
+  color: var(--ink);
+  border-bottom: 1px solid var(--surface);
+}
+
+/* Variante data-header-style="blur" */
+body[data-header-style="blur"] .site-header.is-solid,
+body[data-header-style="blur"][data-header="solid"] .site-header {
+  background-color: rgba(217, 217, 212, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Quand le menu mobile est ouvert, la barre force l'état solide */
+.site-header.menu-open {
+  background-color: var(--header-solid-bg) !important;
+  color: var(--ink) !important;
+  border-bottom: 1px solid var(--surface) !important;
+}
+
+/* ==========================================================================
+   HERO : Révélation cadencée du titre ligne par ligne
+   ========================================================================== */
+.hero-title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-title-line > span {
+  display: inline-block;
+  transform: translateY(115%);
+  opacity: 0;
+  animation: revealHeroLine 750ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-title-line:nth-child(1) > span {
+  animation-delay: 150ms;
+}
+
+.hero-title-line:nth-child(2) > span {
+  animation-delay: 300ms;
+}
+
+.hero-title-line:nth-child(3) > span {
+  animation-delay: 450ms;
+}
+
+@keyframes revealHeroLine {
+  from {
+    transform: translateY(115%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Préférences de mouvement réduit */
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-line > span {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .site-header,
+  .cart-drawer,
+  .cart-overlay,
+  .quickshop-overlay,
+  .quick-shop-card-trigger {
+    transition: none !important;
+  }
+  .quickshop-modal,
+  .quickshop-overlay.open .quickshop-modal {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   SIGNATURE : LE DOSSARD ATHLÉTIQUE
+   ========================================================================== */
+.dossard-badge {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  text-transform: uppercase;
+}
+
+/* Dossard monumental rogné d'arrière-plan sur product.html */
+.dossard-watermark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(10rem, 28vw, 24rem);
+  line-height: 0.75;
+  color: var(--surface);
+  opacity: 0.45;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   TIROIR PANIER (CART DRAWER)
+   ========================================================================== */
+.cart-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 300ms ease, visibility 300ms ease;
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cart-drawer {
+  transform: translateX(100%);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-overlay.open .cart-drawer {
+  transform: translateX(0);
+}
+
+/* ==========================================================================
+   GRILLE PRODUITS ASYMÉTRIQUE
+   ========================================================================== */
+@media (min-width: 1024px) {
+  /* Dans la grille, 1 carte sur 5 est mise en valeur */
+  .grid-asymmetric > .product-card:nth-child(5n + 1) {
+    grid-column: span 2;
+  }
+  .grid-asymmetric > .product-card:nth-child(5n + 1) .card-img-container {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* Masquage de barre de défilement horizontal */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Filets fins de 1px */
+.border-fine {
+  border-width: 1px;
+  border-color: var(--surface);
+}
+
+/* ==========================================================================
+   MODAL ACHAT RAPIDE (QUICK SHOP) — FADE-IN & SCALE-UP ANIMATION
+   ========================================================================== */
+.quickshop-overlay {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease, visibility 250ms ease;
+}
+
+.quickshop-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+@keyframes quickShopFadeInScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.quickshop-modal {
+  opacity: 0;
+  transform: scale(0.95) translateY(12px);
+  will-change: transform, opacity;
+}
+
+.quickshop-overlay.open .quickshop-modal {
+  animation: quickShopFadeInScaleUp 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Bouton de survol Achat Rapide sur la carte */
+.quick-shop-card-trigger {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.product-card:hover .quick-shop-card-trigger,
+.product-card:focus-within .quick-shop-card-trigger {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .quick-shop-card-trigger {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+

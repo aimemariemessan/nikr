@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Fiche Produit // Nike Studio Éditorial</title>
+    <meta name="description" content="Fiche technique détaillée, données de laboratoire et ajout au panier." />
+    <meta property="og:title" content="Fiche Produit // Nike Studio Éditorial" />
+    <meta property="og:description" content="Fiche technique détaillée." />
+    <meta property="og:type" content="website" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: '#EAEAE6',
+              surface: '#D0D0C9',
+              surfaceLight: '#F5F5F0',
+              card: '#FFFFFF',
+              ink: '#101010',
+              muted: '#55564F',
+              alert: '#FF3B1F',
+              signal: '#0033A0'
+            },
+            fontFamily: {
+              display: ['"Big Shoulders Display"', 'Impact', 'sans-serif'],
+              sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+            }
+          }
+        }
+      };
+    </script>
+
+    <!-- Feuille de style personnalisée -->
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+  <body data-header="solid" class="bg-bg text-ink min-h-screen flex flex-col antialiased selection:bg-alert selection:text-ink">
+    
+    <!-- Zone d'injection du Header par js/layout.js -->
+    <div id="header-mount"></div>
+
+    <!-- Conteneur principal de la vue produit -->
+    <main id="product-detail-view" class="flex-1 pt-20 md:pt-24 w-full">
+      <!-- Injecté dynamiquement par initProductDetailPage() dans js/main.js -->
+      <div class="max-w-7xl mx-auto px-4 py-20 text-center font-mono text-xs text-muted">
+        Chargement des données de télémétrie produit...
+      </div>
+    </main>
+
+    <!-- Zone d'injection du Footer par js/layout.js -->
+    <div id="footer-mount"></div>
+
+    <!-- Scripts du projet -->
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/layout.js"></script>
+  </body>
+</html>

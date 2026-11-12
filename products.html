@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Catalogue // Collection Athlétique — Nike Studio Éditorial</title>
+    <meta name="description" content="Découvre l'intégralité des 12 références de la collection de course et équipement technique Nike." />
+    <meta property="og:title" content="Catalogue // Collection Athlétique — Nike Studio Éditorial" />
+    <meta property="og:description" content="Découvre l'intégralité des 12 références de la collection Nike." />
+    <meta property="og:type" content="website" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: '#EAEAE6',
+              surface: '#D0D0C9',
+              surfaceLight: '#F5F5F0',
+              card: '#FFFFFF',
+              ink: '#101010',
+              muted: '#55564F',
+              alert: '#FF3B1F',
+              signal: '#0033A0'
+            },
+            fontFamily: {
+              display: ['"Big Shoulders Display"', 'Impact', 'sans-serif'],
+              sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+            }
+          }
+        }
+      };
+    </script>
+
+    <!-- Feuille de style personnalisée -->
+    <link rel="stylesheet" href="css/custom.css" />
+  </head>
+  <body data-header="solid" class="bg-bg text-ink min-h-screen flex flex-col antialiased selection:bg-alert selection:text-ink">
+    
+    <!-- Zone d'injection du Header par js/layout.js -->
+    <div id="header-mount"></div>
+
+    <main class="flex-1 pt-24 md:pt-28 pb-20 px-4 md:px-8 max-w-7xl mx-auto w-full">
+      
+      <!-- En-tête de page Catalogue avec Dossard Signature -->
+      <div class="border-b border-surface pb-8 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="dossard-badge">INDEX #2026</span>
+            <span class="font-mono text-xs uppercase text-muted tracking-widest">// CATALOGUE TECHNIQUE</span>
+          </div>
+          <h1 class="font-display font-black text-4xl md:text-6xl uppercase tracking-tighter leading-[0.9]">
+            Toute la collection
+          </h1>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <span id="products-count" class="font-mono text-xs font-bold text-muted uppercase tracking-wider">
+            12 références trouvées
+          </span>
+          <button id="global-reset-filters" class="font-mono text-xs text-alert hover:underline uppercase tracking-wider font-semibold">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <!-- BARRE DE FILTRES ET DE TRI -->
+      <div class="border border-surface bg-surface/20 p-5 mb-10 space-y-5">
+        
+        <!-- Ligne 1 : Catégories & Tri -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          
+          <!-- Filtres par catégorie -->
+          <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Filtrer par catégorie">
+            <span class="font-mono text-xs uppercase text-muted tracking-wider mr-2 font-bold">Catégorie :</span>
+            <button type="button" data-filter-category="all" class="font-sans text-xs uppercase tracking-wider font-bold py-2 px-3.5 bg-ink text-bg transition-colors">
+              Tous
+            </button>
+            <button type="button" data-filter-category="running" class="font-sans text-xs uppercase tracking-wider font-bold py-2 px-3.5 bg-surface text-ink hover:bg-ink hover:text-bg transition-colors">
+              Running
+            </button>
+            <button type="button" data-filter-category="homme" class="font-sans text-xs uppercase tracking-wider font-bold py-2 px-3.5 bg-surface text-ink hover:bg-ink hover:text-bg transition-colors">
+              Homme
+            </button>
+            <button type="button" data-filter-category="femme" class="font-sans text-xs uppercase tracking-wider font-bold py-2 px-3.5 bg-surface text-ink hover:bg-ink hover:text-bg transition-colors">
+              Femme
+            </button>
+            <button type="button" data-filter-category="lifestyle" class="font-sans text-xs uppercase tracking-wider font-bold py-2 px-3.5 bg-surface text-ink hover:bg-ink hover:text-bg transition-colors">
+              Lifestyle
+            </button>
+          </div>
+
+          <!-- Sélecteur de tri -->
+          <div class="flex items-center gap-3">
+            <label for="sort-select" class="font-mono text-xs uppercase text-muted tracking-wider font-bold shrink-0">Trier par :</label>
+            <select id="sort-select" class="bg-bg border border-ink text-ink font-sans text-xs font-semibold uppercase tracking-wider py-2 px-3 focus:outline-none">
+              <option value="newest">Nouveautés en premier</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="name">Ordre alphabétique</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Ligne 2 : Slider de budget & Tailles -->
+        <div class="pt-4 border-t border-surface/50 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          
+          <!-- Slider Prix Maximum -->
+          <div class="flex items-center gap-4">
+            <label for="price-range-slider" class="font-mono text-xs uppercase text-muted tracking-wider font-bold shrink-0">
+              Budget max :
+            </label>
+            <input 
+              id="price-range-slider" 
+              type="range" 
+              min="50" 
+              max="260" 
+              step="10" 
+              value="260" 
+              class="w-full accent-ink cursor-pointer"
+            />
+            <span id="price-range-display" class="font-mono text-xs font-bold text-ink shrink-0 min-w-[50px] text-right">
+              260 €
+            </span>
+          </div>
+
+          <!-- Tailles rapides -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <span class="font-mono text-xs uppercase text-muted tracking-wider font-bold shrink-0">Pointure :</span>
+            <div class="flex items-center gap-1">
+              <button type="button" data-filter-size="39" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">39</button>
+              <button type="button" data-filter-size="40" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">40</button>
+              <button type="button" data-filter-size="41" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">41</button>
+              <button type="button" data-filter-size="42" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">42</button>
+              <button type="button" data-filter-size="43" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">43</button>
+              <button type="button" data-filter-size="44" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">44</button>
+              <button type="button" data-filter-size="M" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">M</button>
+              <button type="button" data-filter-size="L" class="font-mono text-xs font-bold px-2 py-1 bg-surface text-ink border border-surface hover:border-ink">L</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Grille des produits -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- Injecté dynamiquement par js/filters.js -->
+      </div>
+
+    </main>
+
+    <!-- Zone d'injection du Footer par js/layout.js -->
+    <div id="footer-mount"></div>
+
+    <!-- Scripts du projet -->
+    <script src="js/products-data.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/layout.js"></script>
+  </body>
+</html>
